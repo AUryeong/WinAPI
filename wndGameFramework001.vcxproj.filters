@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="MAIN">
+      <UniqueIdentifier>{6e486209-4cd4-49d8-a176-969ef4cfde0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PROC">
+      <UniqueIdentifier>{3945281f-f4a9-4ebf-8670-b14ae08b02f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{c1a4479d-0771-407d-9505-4597a7ab1235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="COMMON">
+      <UniqueIdentifier>{e4611a40-bcfa-4be1-9f07-0aedb5659fcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GAME">
+      <UniqueIdentifier>{794f030e-182b-4ea2-b34b-97aff4b58f61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OBJECT">
+      <UniqueIdentifier>{6d25d8dc-65ce-4e17-9311-d7567ece725e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AboutProc.h">
+      <Filter>PROC</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProc.h">
+      <Filter>PROC</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>MAIN</Filter>
+    </ClInclude>
+    <ClInclude Include="wndGameFramework001.h">
+      <Filter>MAIN</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLoop.h">
+      <Filter>GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="DoubleBuffer.h">
+      <Filter>GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Background.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="MermaidObj.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="BlipObj.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AboutProc.cpp">
+      <Filter>PROC</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProc.cpp">
+      <Filter>PROC</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="wndGameFramework001.cpp">
+      <Filter>MAIN</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLoop.cpp">
+      <Filter>GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="DoubleBuffer.cpp">
+      <Filter>GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Background.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="MermaidObj.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="BlipObj.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="wndGameFramework001.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="wndGameFramework001.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Wav\SansSpeak.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+  </ItemGroup>
+</Project>
