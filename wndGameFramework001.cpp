@@ -86,7 +86,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   hWnd = CreateWindowW(szWindowClass, L"20101 기주영의 수족관", WS_OVERLAPPEDWINDOW,
+   hWnd = CreateWindowW(szWindowClass, L"20101 기주영의 수족관", WS_OVERLAPPED | WS_SYSMENU,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)

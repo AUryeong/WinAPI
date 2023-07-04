@@ -11,10 +11,10 @@ AOBJ* InitA(DOUBLEBUFFER* db)
 
 	Temp->DB = db;
 
-	Temp->InvisibleColor = RGB(255, 0, 0);
+	Temp->InvisibleColor = RGB(0, 0, 0);
 
 	//이미지 로딩
-	Temp->Sprite = InitSprite(L"./Image/Mouse.bmp", 81, 81, 0, 10, Temp->InvisibleColor);
+	Temp->Sprite = InitSprite(L"./Image/Juyoung.bmp", 256, 341, 0, 1, Temp->InvisibleColor);
 
 	Temp->ptPosition.x = 0;
 	Temp->ptPosition.y = 400;
@@ -23,36 +23,33 @@ AOBJ* InitA(DOUBLEBUFFER* db)
 
 	Temp->lastTime = GetTickCount() * 0.001f;
 	Temp->elapsedTime = 0.0f;
+	Temp->score = 0;
 
 	return Temp;
 }
 
 void ACreateProcess(AOBJ* Object)
 {
-	static float lastTime = GetTickCount() * 0.001f;
 	static float elapsedTime = 0.0f;
 
 	float currentTime = GetTickCount() * 0.001f;
-	float deltaTime = currentTime - lastTime;
+	float deltaTime = currentTime - Object->lastTime;
 	float desiredFPS = 6.0f;
 
 	elapsedTime += deltaTime;
-	lastTime = currentTime;
+	Object->lastTime = currentTime;
 
 	if (elapsedTime > desiredFPS)
 	{
 		elapsedTime -= desiredFPS;
 
-		lastTime = GetTickCount() * 0.001f;
-
 		Object->isActiving = TRUE;
 
-		int posX = rand() % (Object->DB->BufferSize.right - 100);
-		int posY = rand() % (Object->DB->BufferSize.bottom - 100);
-
+		int posX = rand() % (Object->DB->BufferSize.right - 356);
+		int posY = rand() % (Object->DB->BufferSize.bottom - 441);
+		
 		SetPosition(Object, posX, posY);
 
-		Object->lastTime = GetTickCount() * 0.001f;
 		Object->elapsedTime = 0.0f;
 	}
 }
@@ -80,6 +77,18 @@ void Process(AOBJ* Object)
 		ARemoveProcess(Object);
 	else
 		ACreateProcess(Object);
+}
+
+void Click(AOBJ* Object, int x, int y) 
+{
+	if (Object->isActiving) 
+	{
+		if (x-Object->ptPosition.x  <= Object->Sprite->nWidth && y-Object->ptPosition.y <= Object->Sprite->nHeight)
+		{
+			Object->score++;
+			Object->isActiving = FALSE;
+		}
+	}
 }
 
 // 돌고래 오브젝트 렌더링

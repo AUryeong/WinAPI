@@ -8,11 +8,13 @@ BG* pBG;
 MERMAIDOBJ* pMermaid;
 BLIPOBJ* pBlip;
 ANGIEOBJ* pAngie;
+AMPOBJ* pAmp;
+BALROGOBJ* pBalrog;
 AOBJ* pA;
 SPRITE* pMouse;
 
 POINT ptMouse = { 0, 0 };
-TCHAR strMouseCoord[128];
+TCHAR strScoreCoord[128];
 
 // 게임 초기화 및 로딩
 void Initialize(HWND hWnd)
@@ -31,11 +33,16 @@ void Initialize(HWND hWnd)
     pAngie = InitAngie(pDB);
     SetPosition(pAngie, 600, 200);
 
+    pAmp = InitAmp(pDB);
+    SetPosition(pAmp, 430, 100);
+
+    pBalrog = InitBalrog(pDB);
+    SetPosition(pBalrog, 100, 300);  
+
     pA = InitA(pDB);
     SetPosition(pA, 600, 200);
 
     pMouse = InitSprite(L"./Image/Mouse.bmp", 81, 81, 0, 1, RGB(255, 0, 0));
-
 
     //LoadBMP(pDB, L"./Image/BG/aquarium1.bmp");
     //pSP = InitSprite(L"./image/fish/boss/boss.bmp", 160, 160, 10, RGB(0, 0, 0));
@@ -48,9 +55,11 @@ void Process()
     Process(pMermaid);
     Process(pBlip);
     Process(pAngie);
+    Process(pAmp);
+    Process(pBalrog);
     Process(pA);
     
-    wsprintf(strMouseCoord, L"Mouse Coordinate [%03d, %03d]", ptMouse.x, ptMouse.y);
+    wsprintf(strScoreCoord, L"지금까지 잡은 기주영의 수 : [%d]", pA->score);
     
     Sleep(3);
 }
@@ -62,10 +71,13 @@ void Render()
     Render(pMermaid);
     Render(pBlip);
     Render(pAngie);
-    Render(pMouse, pDB);
+    Render(pAmp);
+    Render(pBalrog);
     Render(pA);
 
-    TextOut(pDB->hdcBack, 10, 10, strMouseCoord, wcslen(strMouseCoord));
+    TextOut(pDB->hdcBack, 10, 10, strScoreCoord, wcslen(strScoreCoord));
+
+    Render(pMouse, pDB);
 }
 
 void Release(HWND hWnd)
@@ -76,6 +88,8 @@ void Release(HWND hWnd)
     Release(pMermaid);
     Release(pBlip);
     Release(pAngie);
+    Release(pAmp);
+    Release(pBalrog);
     Release(pA);
 }
 
@@ -138,7 +152,7 @@ int GameMsgLoop()
             }
             if (msg.message == WM_LBUTTONDOWN) 
             {
-
+                Click(pA, ptMouse.x, ptMouse.y);
             }
             Run();
         }

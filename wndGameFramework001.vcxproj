@@ -136,15 +136,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AboutProc.h" />
+    <ClInclude Include="AmpObj.h" />
     <ClInclude Include="AngieObj.h" />
     <ClInclude Include="AObj.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="BalrogObj.h" />
     <ClInclude Include="BlipObj.h" />
     <ClInclude Include="DoubleBuffer.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameLoop.h" />
+    <ClInclude Include="GumboObj.h" />
     <ClInclude Include="MainProc.h" />
     <ClInclude Include="MermaidObj.h" />
+    <ClInclude Include="NimbusObj.h" />
+    <ClInclude Include="NostraObj.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sprite.h" />
@@ -153,14 +158,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutProc.cpp" />
+    <ClCompile Include="AmpObj.cpp" />
     <ClCompile Include="AngieObj.cpp" />
     <ClCompile Include="AObj.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BalrogObj.cpp" />
     <ClCompile Include="BlipObj.cpp" />
     <ClCompile Include="DoubleBuffer.cpp" />
     <ClCompile Include="GameLoop.cpp" />
+    <ClCompile Include="GumboObj.cpp" />
     <ClCompile Include="MainProc.cpp" />
     <ClCompile Include="MermaidObj.cpp" />
+    <ClCompile Include="NimbusObj.cpp" />
+    <ClCompile Include="NostraObj.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

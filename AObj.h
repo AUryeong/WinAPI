@@ -9,11 +9,14 @@ typedef struct tagAObject
 	BOOL isActiving;
 	float lastTime;
 	float elapsedTime;
+	int score;
 }AOBJ;
 
 AOBJ* InitA(DOUBLEBUFFER* db);
 
 void Process(AOBJ* Object);
+
+void Click(AOBJ* Object, int x, int y);
 
 void Render(AOBJ* Object);
 

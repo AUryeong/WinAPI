@@ -68,6 +68,21 @@
     <ClInclude Include="AObj.h">
       <Filter>OBJECT</Filter>
     </ClInclude>
+    <ClInclude Include="BalrogObj.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="AmpObj.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="GumboObj.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="NimbusObj.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="NostraObj.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutProc.cpp">
@@ -102,6 +117,21 @@
       <Filter>OBJECT</Filter>
     </ClCompile>
     <ClCompile Include="AObj.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="BalrogObj.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="AmpObj.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="GumboObj.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="NimbusObj.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="NostraObj.cpp">
       <Filter>OBJECT</Filter>
     </ClCompile>
   </ItemGroup>
