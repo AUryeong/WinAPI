@@ -57,7 +57,7 @@ void Process(SPRITE* pObj, int frameRate)
 	NextFrameSprite(pObj, frameRate);
 }
 
-// 스프라이트 렌더링 isFlip으로 반대로 출력하게 처리
+// 스프라이트 렌더링, isFlip인 애는 반대로 출력하게 처리
 void Render(SPRITE* pObj, DOUBLEBUFFER* pDB)
 {
 	int x, y, w, h;

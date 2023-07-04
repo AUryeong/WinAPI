@@ -31,6 +31,7 @@ void Process(MERMAIDOBJ* Object)
 {
 	static int frame = 10;
 	static int DX = 4 * ((Object->nCurrentState!=LEFT_SWIM)?1:-1);
+	static int DY = 0;
 
 	//벽에 부딪힐 때 상태 전이 턴동작
 	if (Object->ptPosition.x <= Object->DB->BufferSize.left) // 왼쪽 벽
@@ -43,6 +44,16 @@ void Process(MERMAIDOBJ* Object)
 		Object->nCurrentState = R2L_TURN; // 오-> 왼 턴
 	}
 
+	if (Object->ptPosition.y >= Object->DB->BufferSize.top)
+	{
+		DY *= -1;
+	}
+
+	if (Object->ptPosition.y <= Object->DB->BufferSize.bottom - 100)
+	{
+		DY *= -1;
+	}
+
 	//수영할 때 상태 전이 
 	if (Object->Sprite[Object->nCurrentState]->nCurrentFrame >= Object->Sprite[Object->nCurrentState]->nLastFrame) // nCurrentFrame 안됨 수정해보셈
 	{
@@ -51,12 +62,12 @@ void Process(MERMAIDOBJ* Object)
 		case R2L_TURN:
 			Object->nCurrentState = LEFT_SWIM;
 			DX *= -1;
-			Process(Object->Sprite[R2L_TURN], 1000); //애니메이션 프레임
+			NextFrameSprite(Object, R2L_TURN, 1000); //애니메이션 프레임
 			break;
 		case L2R_TURN:
 			Object->nCurrentState = RIGHT_SWIM;
 			DX *= -1;
-			Process(Object->Sprite[L2R_TURN], 1000); //애니메이션 프레임
+			NextFrameSprite(Object, L2R_TURN, 1000); //애니메이션 프레임
 			break;
 		default:
 			break;
@@ -64,15 +75,17 @@ void Process(MERMAIDOBJ* Object)
 	}
 
 	//움직임 구간
-	if (Object->nCurrentState == LEFT_SWIM)			Object->ptPosition.x += DX;
-	if (Object->nCurrentState == RIGHT_SWIM)		Object->ptPosition.x += DX;
+	if (Object->nCurrentState == LEFT_SWIM || Object->nCurrentState == RIGHT_SWIM)
+	{
+		Object->ptPosition.x += DX;
+		Object->ptPosition.y += DY;
+	}
 	//Process(Object->Sprite[Object->nCurrentState], frame); //애니메이션 프레임
-	NextFrameSprite(Object, frame);
-	Sleep(3);
+	NextFrameSprite(Object, Object->nCurrentState, frame);
 }
 
 // 다음 프레임으로 스프라이트 업데이트
-void NextFrameSprite(MERMAIDOBJ* pMermaid, int frameRate)
+void NextFrameSprite(MERMAIDOBJ* pMermaid, int state, int frameRate)
 {
 	static float lastTime = GetTickCount() * 0.001f;
 	static float elapsedTime = 0.0f;
@@ -87,9 +100,9 @@ void NextFrameSprite(MERMAIDOBJ* pMermaid, int frameRate)
 	if (elapsedTime > desiredFPS)
 	{
 		elapsedTime -= desiredFPS;
-		pMermaid->Sprite[pMermaid->nCurrentState]->nCurrentFrame++;
-		if (pMermaid->Sprite[pMermaid->nCurrentState]->nCurrentFrame > pMermaid->Sprite[pMermaid->nCurrentState]->nLastFrame)
-			pMermaid->Sprite[pMermaid->nCurrentState]->nCurrentFrame = 0;
+		pMermaid->Sprite[state]->nCurrentFrame++;
+		if (pMermaid->Sprite[state]->nCurrentFrame > pMermaid->Sprite[state]->nLastFrame)
+			pMermaid->Sprite[state]->nCurrentFrame = 0;
 	}
 }
 

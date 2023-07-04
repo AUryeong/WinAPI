@@ -12,10 +12,10 @@ BLIPOBJ* InitBlip(DOUBLEBUFFER* db)
 	Temp->InvisibleColor = RGB(255, 0, 0);
 
 	//이미지 로딩
-	Temp->Sprite[LEFT_SWIM] = InitSprite(L"./Image/Fish/Blip/blip.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
-	Temp->Sprite[RIGHT_SWIM] = InitSprite(L"./Image/Fish/Blip/blip2.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
-	Temp->Sprite[R2L_TURN] = InitSprite(L"./Image/Fish/Blip/blip2.bmp", 80, 80, 80, 10, Temp->InvisibleColor, TRUE);
-	Temp->Sprite[L2R_TURN] = InitSprite(L"./Image/Fish/Blip/blip.bmp", 80, 80, 80, 10, Temp->InvisibleColor);
+	Temp->Sprite[LEFT_SWIM] = InitSprite(L"./Image/Fish/BLIP/BLIP.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
+	Temp->Sprite[RIGHT_SWIM] = InitSprite(L"./Image/Fish/BLIP/BLIP2.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
+	Temp->Sprite[R2L_TURN] = InitSprite(L"./Image/Fish/BLIP/BLIP2.bmp", 80, 80, 80, 10, Temp->InvisibleColor, TRUE);
+	Temp->Sprite[L2R_TURN] = InitSprite(L"./Image/Fish/BLIP/BLIP.bmp", 80, 80, 80, 10, Temp->InvisibleColor);
 
 	Temp->ptPosition.x = 0;
 	Temp->ptPosition.y = 400;
@@ -30,7 +30,8 @@ BLIPOBJ* InitBlip(DOUBLEBUFFER* db)
 void Process(BLIPOBJ* Object)
 {
 	static int frame = 10;
-	static int DX = 14 * ((Object->nCurrentState != LEFT_SWIM) ? 1 : -1);
+	static int DX = 9 * ((Object->nCurrentState != LEFT_SWIM) ? 1 : -1);
+	static int DY = 3;
 
 	//벽에 부딪힐 때 상태 전이 턴동작
 	if (Object->ptPosition.x <= Object->DB->BufferSize.left) // 왼쪽 벽
@@ -43,6 +44,16 @@ void Process(BLIPOBJ* Object)
 		Object->nCurrentState = R2L_TURN; // 오-> 왼 턴
 	}
 
+	if (Object->ptPosition.y >= Object->DB->BufferSize.top)
+	{
+		DY *= -1;
+	}
+
+	if (Object->ptPosition.y <= Object->DB->BufferSize.bottom - 100)
+	{
+		DY *= -1;
+	}
+
 	//수영할 때 상태 전이 
 	if (Object->Sprite[Object->nCurrentState]->nCurrentFrame >= Object->Sprite[Object->nCurrentState]->nLastFrame) // nCurrentFrame 안됨 수정해보셈
 	{
@@ -51,12 +62,12 @@ void Process(BLIPOBJ* Object)
 		case R2L_TURN:
 			Object->nCurrentState = LEFT_SWIM;
 			DX *= -1;
-			Process(Object->Sprite[R2L_TURN], 1000); //애니메이션 프레임
+			NextFrameSprite(Object, R2L_TURN, 1000); //애니메이션 프레임
 			break;
 		case L2R_TURN:
 			Object->nCurrentState = RIGHT_SWIM;
 			DX *= -1;
-			Process(Object->Sprite[L2R_TURN], 1000); //애니메이션 프레임
+			NextFrameSprite(Object, L2R_TURN, 1000); //애니메이션 프레임
 			break;
 		default:
 			break;
@@ -64,15 +75,17 @@ void Process(BLIPOBJ* Object)
 	}
 
 	//움직임 구간
-	if (Object->nCurrentState == LEFT_SWIM)			Object->ptPosition.x += DX;
-	if (Object->nCurrentState == RIGHT_SWIM)		Object->ptPosition.x += DX;
+	if (Object->nCurrentState == LEFT_SWIM || Object->nCurrentState == RIGHT_SWIM)
+	{
+		Object->ptPosition.x += DX;
+		Object->ptPosition.y += DY;
+	}
 	//Process(Object->Sprite[Object->nCurrentState], frame); //애니메이션 프레임
-	NextFrameSprite(Object, frame);
-	Sleep(3);
+	NextFrameSprite(Object, Object->nCurrentState, frame);
 }
 
 // 다음 프레임으로 스프라이트 업데이트
-void NextFrameSprite(BLIPOBJ* pBlip, int frameRate)
+void NextFrameSprite(BLIPOBJ* pBlip, int state, int frameRate)
 {
 	static float lastTime = GetTickCount() * 0.001f;
 	static float elapsedTime = 0.0f;
@@ -87,9 +100,9 @@ void NextFrameSprite(BLIPOBJ* pBlip, int frameRate)
 	if (elapsedTime > desiredFPS)
 	{
 		elapsedTime -= desiredFPS;
-		pBlip->Sprite[pBlip->nCurrentState]->nCurrentFrame++;
-		if (pBlip->Sprite[pBlip->nCurrentState]->nCurrentFrame > pBlip->Sprite[pBlip->nCurrentState]->nLastFrame)
-			pBlip->Sprite[pBlip->nCurrentState]->nCurrentFrame = 0;
+		pBlip->Sprite[state]->nCurrentFrame++;
+		if (pBlip->Sprite[state]->nCurrentFrame > pBlip->Sprite[state]->nLastFrame)
+			pBlip->Sprite[state]->nCurrentFrame = 0;
 	}
 }
 

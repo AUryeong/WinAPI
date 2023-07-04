@@ -136,6 +136,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AboutProc.h" />
+    <ClInclude Include="AngieObj.h" />
+    <ClInclude Include="AObj.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BlipObj.h" />
     <ClInclude Include="DoubleBuffer.h" />
@@ -151,6 +153,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutProc.cpp" />
+    <ClCompile Include="AngieObj.cpp" />
+    <ClCompile Include="AObj.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BlipObj.cpp" />
     <ClCompile Include="DoubleBuffer.cpp" />

@@ -26,7 +26,7 @@ void Render(MERMAIDOBJ* Object);
 
 void Release(MERMAIDOBJ* Object);
 
-void NextFrameSprite(MERMAIDOBJ* pMermaid, int frame);
+void NextFrameSprite(MERMAIDOBJ* pMermaid, int state, int frame);
 
 void SetPosition(MERMAIDOBJ* Object, int x, int y);
 

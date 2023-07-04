@@ -1,16 +1,24 @@
 // 게임 메인 루프
 #include "pch.h"
-#include "GameLoop.h"
+#include <windowsx.h>
 
 extern BOOL bIsActive;
 DOUBLEBUFFER* pDB;
 BG* pBG;
 MERMAIDOBJ* pMermaid;
 BLIPOBJ* pBlip;
+ANGIEOBJ* pAngie;
+AOBJ* pA;
+SPRITE* pMouse;
+
+POINT ptMouse = { 0, 0 };
+TCHAR strMouseCoord[128];
 
 // 게임 초기화 및 로딩
 void Initialize(HWND hWnd)
 {
+    while (ShowCursor(FALSE) >= 0);
+
     pDB = CreateDoubleBuffer(hWnd);
     pBG = InitBG(pDB);
 
@@ -18,7 +26,15 @@ void Initialize(HWND hWnd)
     SetPosition(pMermaid, 200, 400);
 
     pBlip = InitBlip(pDB);
-    SetPosition(pBlip, 400, 100);
+    SetPosition(pBlip, 200, 400);
+
+    pAngie = InitAngie(pDB);
+    SetPosition(pAngie, 600, 200);
+
+    pA = InitA(pDB);
+    SetPosition(pA, 600, 200);
+
+    pMouse = InitSprite(L"./Image/Mouse.bmp", 81, 81, 0, 1, RGB(255, 0, 0));
 
 
     //LoadBMP(pDB, L"./Image/BG/aquarium1.bmp");
@@ -31,6 +47,12 @@ void Process()
     Process(pBG);
     Process(pMermaid);
     Process(pBlip);
+    Process(pAngie);
+    Process(pA);
+    
+    wsprintf(strMouseCoord, L"Mouse Coordinate [%03d, %03d]", ptMouse.x, ptMouse.y);
+    
+    Sleep(3);
 }
 
 // 렌더링
@@ -39,13 +61,22 @@ void Render()
     Render(pBG);
     Render(pMermaid);
     Render(pBlip);
+    Render(pAngie);
+    Render(pMouse, pDB);
+    Render(pA);
+
+    TextOut(pDB->hdcBack, 10, 10, strMouseCoord, wcslen(strMouseCoord));
 }
 
 void Release(HWND hWnd)
 {
+    ShowCursor(TRUE);
+
     Release(pBG);
     Release(pMermaid);
     Release(pBlip);
+    Release(pAngie);
+    Release(pA);
 }
 
 void Run()
@@ -95,6 +126,19 @@ int GameMsgLoop()
                     ChangeBackground(pBG, GREENAR);
                     break;
                 }
+            }
+            if (msg.message == WM_MOUSEMOVE)
+            {
+                int x, y;
+                x = GET_X_LPARAM(msg.lParam);
+                y = GET_Y_LPARAM(msg.lParam);
+                ptMouse.x = x;
+                ptMouse.y = y;
+                SetPos(pMouse, x-40, y-40);
+            }
+            if (msg.message == WM_LBUTTONDOWN) 
+            {
+
             }
             Run();
         }

@@ -18,7 +18,7 @@ void Render(BLIPOBJ* Object);
 
 void Release(BLIPOBJ* Object);
 
-void NextFrameSprite(BLIPOBJ* pMermaid, int frame);
+void NextFrameSprite(BLIPOBJ* pBlip, int state, int frame);
 
 void SetPosition(BLIPOBJ* Object, int x, int y);
 

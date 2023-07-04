@@ -62,6 +62,12 @@
     <ClInclude Include="BlipObj.h">
       <Filter>OBJECT</Filter>
     </ClInclude>
+    <ClInclude Include="AngieObj.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="AObj.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutProc.cpp">
@@ -90,6 +96,12 @@
       <Filter>OBJECT</Filter>
     </ClCompile>
     <ClCompile Include="BlipObj.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="AngieObj.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="AObj.cpp">
       <Filter>OBJECT</Filter>
     </ClCompile>
   </ItemGroup>
