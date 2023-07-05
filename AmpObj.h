@@ -8,9 +8,14 @@ typedef struct tagAmpObject
 	POINT ptPosition;
 	int nCurrentState;
 	int nMaxState;
+	
+	// 여러개의 앰프 생성을 위한 변수들 ( 기존엔 static )
+	int DX;
+	float lastTime;
+	float elapsedTime;
 }AMPOBJ;
 
-AMPOBJ* InitAmp(DOUBLEBUFFER* db);
+AMPOBJ* InitAmp(DOUBLEBUFFER* db, int speed= 15);
 
 void Process(AMPOBJ* Object);
 

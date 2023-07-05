@@ -9,7 +9,12 @@ MERMAIDOBJ* pMermaid;
 BLIPOBJ* pBlip;
 ANGIEOBJ* pAngie;
 AMPOBJ* pAmp;
+AMPOBJ* pAmp2;
+AMPOBJ* pAmp3;
 BALROGOBJ* pBalrog;
+GUMBOOBJ* pGumbo;
+NIMBUSOBJ* pNimbus;
+NOSTRAOBJ* pNostra;
 AOBJ* pA;
 SPRITE* pMouse;
 
@@ -19,7 +24,7 @@ TCHAR strScoreCoord[128];
 // 게임 초기화 및 로딩
 void Initialize(HWND hWnd)
 {
-    while (ShowCursor(FALSE) >= 0);
+    while (ShowCursor(FALSE) >= 0); // 커서 숨길꺼
 
     pDB = CreateDoubleBuffer(hWnd);
     pBG = InitBG(pDB);
@@ -36,19 +41,33 @@ void Initialize(HWND hWnd)
     pAmp = InitAmp(pDB);
     SetPosition(pAmp, 430, 100);
 
+    pAmp2 = InitAmp(pDB, 8);
+    SetPosition(pAmp2, 1, 650);
+
+    pAmp3 = InitAmp(pDB, 23);
+    SetPosition(pAmp3, 130, 600);
+
     pBalrog = InitBalrog(pDB);
-    SetPosition(pBalrog, 100, 300);  
+    SetPosition(pBalrog, 100, 300);
 
-    pA = InitA(pDB);
-    SetPosition(pA, 600, 200);
+    pGumbo = InitGumbo(pDB);
+    SetPosition(pGumbo, 300, 0);
 
-    pMouse = InitSprite(L"./Image/Mouse.bmp", 81, 81, 0, 1, RGB(255, 0, 0));
+    pNimbus = InitNimbus(pDB);
+    SetPosition(pNimbus, 100, 200);
+
+    pNostra = InitNostra(pDB);
+    SetPosition(pNostra, 600, 600);
+
+    pA = InitA(pDB); // 기주영 생성 오브젝트
+
+    pMouse = InitSprite(L"./Image/Mouse.bmp", 81, 81, 0, 1, RGB(255, 0, 0)); // 마우스 이미지
 
     //LoadBMP(pDB, L"./Image/BG/aquarium1.bmp");
     //pSP = InitSprite(L"./image/fish/boss/boss.bmp", 160, 160, 10, RGB(0, 0, 0));
 }
 
-// 프로세스
+// 처리
 void Process()
 {
     Process(pBG);
@@ -56,7 +75,12 @@ void Process()
     Process(pBlip);
     Process(pAngie);
     Process(pAmp);
+    Process(pAmp2);
+    Process(pAmp3);
     Process(pBalrog);
+    Process(pGumbo);
+    Process(pNimbus);
+    Process(pNostra);
     Process(pA);
     
     wsprintf(strScoreCoord, L"지금까지 잡은 기주영의 수 : [%d]", pA->score);
@@ -72,7 +96,12 @@ void Render()
     Render(pBlip);
     Render(pAngie);
     Render(pAmp);
+    Render(pAmp2);
+    Render(pAmp3);
     Render(pBalrog);
+    Render(pGumbo);
+    Render(pNimbus);
+    Render(pNostra);
     Render(pA);
 
     TextOut(pDB->hdcBack, 10, 10, strScoreCoord, wcslen(strScoreCoord));
@@ -80,6 +109,7 @@ void Render()
     Render(pMouse, pDB);
 }
 
+// 릴리즈
 void Release(HWND hWnd)
 {
     ShowCursor(TRUE);
@@ -89,10 +119,16 @@ void Release(HWND hWnd)
     Release(pBlip);
     Release(pAngie);
     Release(pAmp);
+    Release(pAmp2);
+    Release(pAmp3);
     Release(pBalrog);
+    Release(pGumbo);
+    Release(pNimbus);
+    Release(pNostra);
     Release(pA);
 }
 
+// 게임 작동
 void Run()
 {
     Process();
@@ -143,15 +179,14 @@ int GameMsgLoop()
             }
             if (msg.message == WM_MOUSEMOVE)
             {
-                int x, y;
-                x = GET_X_LPARAM(msg.lParam);
-                y = GET_Y_LPARAM(msg.lParam);
-                ptMouse.x = x;
-                ptMouse.y = y;
-                SetPos(pMouse, x-40, y-40);
+                ptMouse.x = GET_X_LPARAM(msg.lParam);
+                ptMouse.y = GET_Y_LPARAM(msg.lParam);
+                SetPos(pMouse, ptMouse.x -40, ptMouse.y-40);
             }
             if (msg.message == WM_LBUTTONDOWN) 
             {
+                ptMouse.x = GET_X_LPARAM(msg.lParam);
+                ptMouse.y = GET_Y_LPARAM(msg.lParam);
                 Click(pA, ptMouse.x, ptMouse.y);
             }
             Run();
@@ -164,6 +199,7 @@ int GameMsgLoop()
     return (int)msg.wParam;
 }
 
+// 윈도우 메세지 루프
 int WndMsgLoop()
 {
     MSG msg;

@@ -1,7 +1,7 @@
 #include "pch.h"
 
-// 앰프 오브젝트 생성
-AMPOBJ* InitAmp(DOUBLEBUFFER* db)
+// 앰프 오브젝트 생성, 여러개 소환할 수 있게 static 없앰
+AMPOBJ* InitAmp(DOUBLEBUFFER* db, int speed)
 {
 	AMPOBJ* Temp;
 
@@ -23,6 +23,11 @@ AMPOBJ* InitAmp(DOUBLEBUFFER* db)
 	Temp->nCurrentState = RIGHT_SWIM;
 	Temp->nMaxState = L2R_TURN;
 
+	Temp->lastTime = GetTickCount() * 0.001f;
+	Temp->elapsedTime = 0.0f;
+
+	Temp->DX = speed * ((Temp->nCurrentState != LEFT_SWIM) ? 1 : -1);
+
 	return Temp;
 }
 
@@ -30,8 +35,6 @@ AMPOBJ* InitAmp(DOUBLEBUFFER* db)
 void Process(AMPOBJ* Object)
 {
 	static int frame = 10;
-	static int DX = 15 * ((Object->nCurrentState != LEFT_SWIM) ? 1 : -1);
-	static int DY = 0;
 
 	//벽에 부딪힐 때 상태 전이 턴동작
 	if (Object->ptPosition.x <= Object->DB->BufferSize.left) // 왼쪽 벽
@@ -44,16 +47,6 @@ void Process(AMPOBJ* Object)
 		Object->nCurrentState = R2L_TURN; // 오-> 왼 턴
 	}
 
-	if (Object->ptPosition.y >= Object->DB->BufferSize.top)
-	{
-		DY *= -1;
-	}
-
-	if (Object->ptPosition.y <= Object->DB->BufferSize.bottom - 100)
-	{
-		DY *= -1;
-	}
-
 	//수영할 때 상태 전이 
 	if (Object->Sprite[Object->nCurrentState]->nCurrentFrame >= Object->Sprite[Object->nCurrentState]->nLastFrame) // nCurrentFrame 안됨 수정해보셈
 	{
@@ -61,12 +54,12 @@ void Process(AMPOBJ* Object)
 		{
 		case R2L_TURN:
 			Object->nCurrentState = LEFT_SWIM;
-			DX *= -1;
+			Object->DX *= -1;
 			NextFrameSprite(Object, R2L_TURN, 1000); //애니메이션 프레임
 			break;
 		case L2R_TURN:
 			Object->nCurrentState = RIGHT_SWIM;
-			DX *= -1;
+			Object->DX *= -1;
 			NextFrameSprite(Object, L2R_TURN, 1000); //애니메이션 프레임
 			break;
 		default:
@@ -77,8 +70,7 @@ void Process(AMPOBJ* Object)
 	//움직임 구간
 	if (Object->nCurrentState == LEFT_SWIM || Object->nCurrentState == RIGHT_SWIM)
 	{
-		Object->ptPosition.x += DX;
-		Object->ptPosition.y += DY;
+		Object->ptPosition.x += Object->DX;
 	}
 	//Process(Object->Sprite[Object->nCurrentState], frame); //애니메이션 프레임
 	NextFrameSprite(Object, Object->nCurrentState, frame);
@@ -87,19 +79,17 @@ void Process(AMPOBJ* Object)
 // 다음 프레임으로 스프라이트 업데이트
 void NextFrameSprite(AMPOBJ* pAmp, int state, int frameRate)
 {
-	static float lastTime = GetTickCount() * 0.001f;
-	static float elapsedTime = 0.0f;
 
 	float currentTime = GetTickCount() * 0.001f;
-	float deltaTime = currentTime - lastTime;
+	float deltaTime = currentTime - pAmp->lastTime;
 	float desiredFPS = 1.0f / frameRate;
 
-	elapsedTime += deltaTime;
-	lastTime = currentTime;
+	pAmp->elapsedTime += deltaTime;
+	pAmp->lastTime = currentTime;
 
-	if (elapsedTime > desiredFPS)
+	if (pAmp->elapsedTime > desiredFPS)
 	{
-		elapsedTime -= desiredFPS;
+		pAmp->elapsedTime -= desiredFPS;
 		pAmp->Sprite[state]->nCurrentFrame++;
 		if (pAmp->Sprite[state]->nCurrentFrame > pAmp->Sprite[state]->nLastFrame)
 			pAmp->Sprite[state]->nCurrentFrame = 0;

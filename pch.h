@@ -14,14 +14,14 @@
 #include "BlipObj.h" // 돌고래 오브젝트 헤더
 #include "Background.h" // 배경 오브젝트 헤더
 #include "AngieObj.h" // 앙기 오브젝트 헤더
-#include "MermaidObj.h" // 인어 오브젝터 헤더
-#include "AObj.h" // 기주영 오브젝터 헤더
-#include "GumboObj.h" // 검보 오브젝터 헤더
-#include "NostraObj.h" // 노스트라다머스 헤더
-#include "NimbusObj.h" // 님버스 오브젝터 헤더
-#include "BalrogObj.h" // 발록 오브젝터 헤더
+#include "MermaidObj.h" // 인어 오브젝트 헤더
+#include "AObj.h" // 기주영 소환 오브젝트 헤더
+#include "GumboObj.h" // 검보 오브젝트 헤더
+#include "NostraObj.h" // 노스트라다머스 오브젝트 헤더
+#include "NimbusObj.h" // 님버스 오브젝트 헤더
+#include "BalrogObj.h" // 발록 오브젝트 헤더
 #include "AmpObj.h" // 엠프 오브젝트 헤더
-#include "SummonAObj.h" // 기주영 소환하는 오브젝터 헤더
+#include "SummonAObj.h" // 기주영 소환하는 오브젝트 헤더
 #include "GameLoop.h" // 게임 루프 헤더
 #include "wndGameFramework001.h" // 윈도우 메인 생성을 위한 헤더
 #include "MainProc.h" // 기본 대화 상자용 헤더

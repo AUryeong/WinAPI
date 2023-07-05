@@ -1,6 +1,6 @@
 #include "pch.h"
 
-// 돌고래 오브젝트 생성
+// 기주영 소환 오브젝트 생성, 기주영을 계속 주변에 나두게 할거
 AOBJ* InitA(DOUBLEBUFFER* db)
 {
 	srand((unsigned int)time(NULL));
@@ -28,7 +28,8 @@ AOBJ* InitA(DOUBLEBUFFER* db)
 	return Temp;
 }
 
-void ACreateProcess(AOBJ* Object)
+// 기주영이 꺼져있을때 작동하는 처리, 기주영을 소환함
+void UnactivatingProcess(AOBJ* Object)
 {
 	static float elapsedTime = 0.0f;
 
@@ -54,7 +55,8 @@ void ACreateProcess(AOBJ* Object)
 	}
 }
 
-void ARemoveProcess(AOBJ* Object)
+// 기주영을 삭제하는 처리, 기주영을 없앰
+void RemoveProcess(AOBJ* Object)
 {
 	float currentTime = GetTickCount() * 0.001f;
 	float deltaTime = currentTime - Object->lastTime;
@@ -70,20 +72,37 @@ void ARemoveProcess(AOBJ* Object)
 	}
 }
 
-//  오브젝트 처리
+// 기주영이 켜져있을때 작동하는 처리, 위치를 이동하고 기주영을 삭제하는 처리를 실행함
+void ActivatingProcess(AOBJ* Object)
+{
+	static int DY = -5;
+	if (Object->ptPosition.y >= Object->DB->BufferSize.top - 100)
+	{
+		DY *= -1;
+	}
+	if (Object->ptPosition.y <= Object->DB->BufferSize.bottom - 200)
+	{
+		DY *= -1;
+	}
+	Object->ptPosition.y += DY;
+	RemoveProcess(Object);
+}
+
+// 처리
 void Process(AOBJ* Object)
 {
 	if (Object->isActiving)
-		ARemoveProcess(Object);
+		ActivatingProcess(Object);
 	else
-		ACreateProcess(Object);
+		UnactivatingProcess(Object);
 }
 
+// 클릭했을때 감지해서 기주영 없애기
 void Click(AOBJ* Object, int x, int y) 
 {
 	if (Object->isActiving) 
 	{
-		if (x-Object->ptPosition.x  <= Object->Sprite->nWidth && y-Object->ptPosition.y <= Object->Sprite->nHeight)
+		if (x - Object->ptPosition.x  <= Object->Sprite->nWidth && Object->ptPosition.y-y <= Object->Sprite->nHeight)
 		{
 			Object->score++;
 			Object->isActiving = FALSE;
@@ -91,7 +110,7 @@ void Click(AOBJ* Object, int x, int y)
 	}
 }
 
-// 돌고래 오브젝트 렌더링
+// 오브젝트 렌더링, 기주영 켜져있을때만 보이게
 void Render(AOBJ* Object)
 {
 	if (Object->isActiving)
@@ -101,14 +120,14 @@ void Render(AOBJ* Object)
 	}
 }
 
-// 돌고래 오브젝트의 위치 변경
+// 기주영 오브젝트의 위치 변경
 void SetPosition(AOBJ* Object, int x, int y)
 {
 	Object->ptPosition.x = x;
 	Object->ptPosition.y = y;
 }
 
-// 돌고래 오브젝트 해제
+// 오브젝트 삭제
 void Release(AOBJ* Object)
 {
 	Release(Object->Sprite);

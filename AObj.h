@@ -6,10 +6,13 @@ typedef struct tagAObject
 	SPRITE* Sprite;
 	COLORREF InvisibleColor;
 	POINT ptPosition;
+
 	BOOL isActiving;
+
 	float lastTime;
 	float elapsedTime;
-	int score;
+
+	int score; // 지금까지 잡은 기주영 수
 }AOBJ;
 
 AOBJ* InitA(DOUBLEBUFFER* db);

@@ -1,5 +1,6 @@
 #include "pch.h"
 
+// 배경 생성
 BG* InitBG(DOUBLEBUFFER* db)
 {
 	BG* Temp;
@@ -11,6 +12,7 @@ BG* InitBG(DOUBLEBUFFER* db)
 	return Temp;
 }
 
+// 배경 변경
 void ChangeBackground(BG* bg, int backgroundNumber) 
 {
 	switch (backgroundNumber) {
@@ -41,6 +43,7 @@ void Process(BG* bg)
 
 }
 
+// 렌더링
 void Render(BG* bg) 
 {
 	int x, y; //좌표
@@ -62,6 +65,7 @@ void Render(BG* bg)
 		bg->DB->hdcImage, 0, 0, ImgW, ImgH, SRCCOPY);
 }
 
+// 해체
 void Release(BG* bg)
 {
 	DeleteObject(bg->DB->hbmImage);

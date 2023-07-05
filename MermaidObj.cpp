@@ -12,10 +12,10 @@ MERMAIDOBJ* InitMermaid(DOUBLEBUFFER* db)
 	Temp->InvisibleColor = RGB(255, 0, 0);
 
 	//이미지 로딩
-	Temp->Sprite[LEFT_SWIM] = InitSprite(L"./Image/Fish/Mermaid/Mermaid_Left.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
-	Temp->Sprite[RIGHT_SWIM] = InitSprite(L"./Image/Fish/Mermaid/Mermaid_Right.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
-	Temp->Sprite[R2L_TURN] = InitSprite(L"./Image/Fish/Mermaid/Mermaid_R2LTurn.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
-	Temp->Sprite[L2R_TURN] = InitSprite(L"./Image/Fish/Mermaid/Mermaid_L2RTurn.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
+	Temp->Sprite[LEFT_SWIM] = InitSprite(L"./Image/Fish/MERMAID/MERMAID_Left.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
+	Temp->Sprite[RIGHT_SWIM] = InitSprite(L"./Image/Fish/MERMAID/MERMAID_Right.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
+	Temp->Sprite[R2L_TURN] = InitSprite(L"./Image/Fish/MERMAID/MERMAID_R2LTurn.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
+	Temp->Sprite[L2R_TURN] = InitSprite(L"./Image/Fish/MERMAID/MERMAID_L2RTurn.bmp", 80, 80, 0, 10, Temp->InvisibleColor);
 
 	Temp->ptPosition.x = 0;
 	Temp->ptPosition.y = 400;

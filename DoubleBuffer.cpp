@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DoubleBuffer.h"
 
+// 더블 버퍼 생성
 DOUBLEBUFFER* CreateDoubleBuffer(HWND hWnd)
 {
 	DOUBLEBUFFER* Temp;
@@ -21,6 +22,7 @@ DOUBLEBUFFER* CreateDoubleBuffer(HWND hWnd)
 	return Temp;
 }
 
+// 더블 버퍼 삭제
 void Release(DOUBLEBUFFER* Obj)
 {
 	DeleteObject(Obj->hdcImage);
@@ -29,11 +31,13 @@ void Release(DOUBLEBUFFER* Obj)
 	DeleteDC(Obj->hdcFront);
 }
 
+// 더블 버퍼 처리
 void Process(DOUBLEBUFFER* Obj)
 {
 
 }
 
+// 더블 버퍼 렌더링
 void Render(DOUBLEBUFFER* Obj)
 {
 	int x, y; //좌표
@@ -90,6 +94,7 @@ void LoadBMP(DOUBLEBUFFER* Obj, const TCHAR* filename)
 	SelectObject(Obj->hdcImage, Obj->hbmImage);
 }
 
+// 비트맵이미지 읽어오기, 반환값 있음
 HBITMAP LoadBMP(const TCHAR* filename)
 {
 	HBITMAP hbmTemp;
